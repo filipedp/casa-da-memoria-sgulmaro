@@ -128,6 +128,14 @@ section{padding:100px 0;scroll-margin-top:70px}
 .tempo-nav{display:flex;gap:10px;margin-top:26px}
 .circ{width:48px;height:48px;border-radius:50%;border:2px solid var(--tinta);background:none;color:var(--tinta);font-size:1.1rem;cursor:pointer;transition:background .2s,color .2s}
 .circ:hover{background:var(--tinta);color:var(--cal)}
+@media (max-width:600px){
+  .tempo-trilho{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));row-gap:6px;overflow:visible;padding:6px 0 4px}
+  .tempo-trilho::before{display:none}
+  .tempo-trilho button{padding:0 4px 0 0;border-top:2px solid var(--nevoa);display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;align-self:start}
+  .tempo-trilho button[aria-selected="true"]{border-top-color:var(--musgo)}
+  .tempo-trilho button i{margin:-9px 0 10px}
+  .tempo-trilho button b{white-space:normal;font-size:1rem;line-height:1.15}
+}
 @media (max-width:900px){.tempo{grid-template-columns:minmax(0,1fr)}.tempo-foto{aspect-ratio:4/3;order:-1}}
 
 
