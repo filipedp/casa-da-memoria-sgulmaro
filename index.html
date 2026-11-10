@@ -114,9 +114,9 @@ section{padding:100px 0;scroll-margin-top:70px}
 .tempo-trilho{display:flex;gap:0;margin:34px 0 26px;position:relative;overflow-x:auto;overflow-y:hidden;padding:6px 4px 10px;scrollbar-width:none;-ms-overflow-style:none}
 .tempo-trilho::-webkit-scrollbar{display:none}
 .tempo-trilho::before{content:"";position:absolute;left:0;right:0;top:27px;height:2px;background:var(--nevoa)}
-.tempo-trilho button{flex:1 0 76px;background:none;border:0;padding:0 6px;text-align:left;cursor:pointer;position:relative;font:inherit;color:var(--texto-suave)}
+.tempo-trilho button{flex:1 0 64px;background:none;border:0;padding:0 6px;text-align:left;cursor:pointer;position:relative;font:inherit;color:var(--texto-suave)}
 .tempo-trilho button i{display:block;width:16px;height:16px;border-radius:50%;background:var(--cal);border:3px solid var(--salvia);margin:14px 0 12px;transition:transform .3s var(--curva),background .3s,border-color .3s}
-.tempo-trilho button b{display:block;font-family:var(--display);font-weight:700;font-size:1.15rem;color:var(--tinta);font-variant-numeric:tabular-nums}
+.tempo-trilho button b{display:block;font-family:var(--display);font-weight:700;font-size:1.05rem;white-space:nowrap;color:var(--tinta);font-variant-numeric:tabular-nums}
 .tempo-trilho button[aria-selected="true"] i{background:var(--musgo);border-color:var(--musgo);transform:scale(1.35)}
 .tempo-trilho button[aria-selected="true"] b{color:var(--musgo)}
 .tempo-card{min-height:200px}
@@ -128,7 +128,7 @@ section{padding:100px 0;scroll-margin-top:70px}
 .tempo-nav{display:flex;gap:10px;margin-top:26px}
 .circ{width:48px;height:48px;border-radius:50%;border:2px solid var(--tinta);background:none;color:var(--tinta);font-size:1.1rem;cursor:pointer;transition:background .2s,color .2s}
 .circ:hover{background:var(--tinta);color:var(--cal)}
-@media (max-width:900px){.tempo{grid-template-columns:1fr}.tempo-foto{aspect-ratio:4/3;order:-1}}
+@media (max-width:900px){.tempo{grid-template-columns:minmax(0,1fr)}.tempo-foto{aspect-ratio:4/3;order:-1}}
 
 
 /* Curador */
@@ -340,9 +340,9 @@ dialog[open]{animation:entra .35s var(--curva)}
   <div class="numeros">
     <ul>
       <li><strong data-conta="1847">1847</strong><span>nasce Alessandro Sgulmaro, patriarca da família</span></li>
+      <li><strong data-conta="1894">1894</strong><span>Alessandro chega ao Porto de Benevente, vindo de Soave, Itália</span></li>
       <li><strong>1890–1900</strong><span>construção do Paiol dos Couros</span></li>
       <li><strong data-conta="1926">1926</strong><span>escritura da Fazenda São Venancio</span></li>
-      <li><strong data-conta="2">2</strong><span>espaços de memória, lado a lado</span></li>
     </ul>
   </div>
 
@@ -596,10 +596,11 @@ const arquivo = (f, peq) => `img/${f.id}${peq && !f.grande ? "-p" : ""}.jpg`;
 /* ---------- Linha do tempo ---------- */
 const MOMENTOS = [
   {ano:"1847", titulo:"Nasce o patriarca", texto:"Alessandro Sgulmaro nasce em 12 de maio de 1847. A família o lembra como seu patriarca, e um busto em sua homenagem, oferecido pelo neto Alexandre Sgulmaro, fica no jardim da propriedade.", img:"busto-1", alt:"Busto metálico de Alessandro Sgulmaro, de chapéu e bigode."},
-  {ano:"1890", titulo:"O Paiol dos Couros", texto:"Entre 1890 e 1900 é construído o Paiol dos Couros, segundo a placa assinada por José Sgulmaro. Hoje ele abriga as ferramentas e os utensílios do acervo.", img:"paiol-placa", alt:"Fachada do paiol com a placa de identificação."},
+  {ano:"1894", titulo:"A chegada ao Brasil", texto:"Em 23 de agosto de 1894, Alessandro Sgulmaro desembarca no Porto de Benevente, atual Anchieta, aos 47 anos. Natural de Soave, na província de Verona, região do Vêneto, na Itália, ele tem a chegada registrada na base de dados Imigrantes Espírito Santo, do Arquivo Público do Estado.", img:"casa-grande", alt:"Casa grande de paredes brancas e janelas azuis, com morros ao fundo."},
+  {ano:"1890–1900", titulo:"O Paiol dos Couros", texto:"Entre 1890 e 1900 é construído o Paiol dos Couros, segundo a placa assinada por José Sgulmaro. Hoje ele abriga as ferramentas e os utensílios do acervo.", img:"paiol-placa", alt:"Fachada do paiol com a placa de identificação."},
   {ano:"1926", titulo:"A escritura da fazenda", texto:"Em 8 de maio de 1926, uma escritura pública de compra e venda registra a Fazenda São Venancio, em Alfredo Chaves, com casas, paióis, engenho de pilar café, moinho, pasto e cafezal.", img:"documento-2", alt:"Extrato manuscrito da escritura de 1926."},
   {ano:"1932", titulo:"A despedida", texto:"Alessandro Sgulmaro falece em 19 de julho de 1932. A placa do busto registra as duas datas e a homenagem do neto.", img:"busto-2", alt:"Busto sobre pedestal com a placa e as datas de nascimento e falecimento."},
-  {ano:"1954", titulo:"Nasce o curador", texto:"José Sgulmaro Neto, filho de Alexandre Sgulmaro e Iolanda Dalvi Sgulmaro, nasce na casa principal da fazenda. Décadas depois, ele se tornaria o curador do acervo da família.", img:"casa-grande", alt:"Casa grande de paredes brancas e janelas azuis."},
+  {ano:"1954", titulo:"Nasce o curador", texto:"José Sgulmaro Neto, filho de Alexandre Sgulmaro e Iolanda Dalvi Sgulmaro, nasce na casa principal da fazenda. Décadas depois, ele se tornaria o curador do acervo da família.", img:"curador", alt:"José Sgulmaro Neto diante da casa grande onde nasceu."},
   {ano:"Hoje", titulo:"A memória aberta à comunidade", texto:"A família reúne fotografias, documentos e objetos na Casa da Memória e no Paiol dos Couros, para que moradores, estudantes e visitantes conheçam como se vivia e se trabalhava em Batatal.", img:"memoria-3", alt:"Painel de fotografias de família na Casa da Memória."}
 ];
 const trilho = document.getElementById("trilho");
