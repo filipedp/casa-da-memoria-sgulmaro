@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa da Memória da Família Sgulmaro</title>
+<meta name="description" content="Casa da Memória da Família Sgulmaro e Paiol dos Couros: fotografias, documentos e ferramentas que guardam a história da família Sgulmaro e do trabalho no campo em Batatal, Alfredo Chaves (ES).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Paleta verde da mata de Batatal, do musgo das pedras à névoa dos morros.
+   Layout: faixas largas que alternam claro e escuro; fotos ocupam a largura toda nos momentos-chave. */
+:root{
+  --tinta:#1d2a24;     /* texto e fundos escuros */
+  --musgo:#2f5b4a;     /* destaque principal */
+  --salvia:#6f8f7c;    /* destaque suave, linhas */
+  --nevoa:#c7d5cc;     /* superfícies claras, texto sobre escuro */
+  --cal:#f3f6f4;       /* fundo */
+  --branco:#ffffff;
+  --texto-suave:#4a5a52;
+  --display:"Bricolage Grotesque", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --corpo:"Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --larg:1200px;
+  --curva:cubic-bezier(.2,.7,.2,1);
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cal);color:var(--tinta);font-family:var(--corpo);font-size:17px;line-height:1.65}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--musgo)}
+:focus-visible{outline:3px solid var(--salvia);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;letter-spacing:-.02em;text-wrap:balance;margin:0}
+h2{font-size:clamp(2.1rem,4.6vw,3.6rem)}
+h3{font-size:1.35rem;letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:var(--larg);margin:0 auto;padding:0 20px}
+.rotulo{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--musgo)}
+.rotulo::before{content:"";width:28px;height:2px;background:currentColor}
+
+/* Barra de progresso de leitura */
+.progresso{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--salvia);transform-origin:0 50%;transform:scaleX(0);z-index:60}
+
+/* Cabeçalho: transparente sobre a abertura, sólido ao rolar */
+.topo{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .35s,box-shadow .35s,color .35s;color:var(--cal)}
+.topo.solido{background:rgba(243,246,244,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--nevoa);color:var(--tinta)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:70px}
+.marca{font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:inherit;text-decoration:none;white-space:nowrap}
+.marca small{display:block;font-family:var(--corpo);font-weight:600;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;opacity:.75}
+.menu{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+.menu a{color:inherit;text-decoration:none;font-size:.9rem;font-weight:600;padding:8px 12px;border-radius:999px;transition:background .2s}
+.menu a:hover{background:rgba(127,160,140,.22)}
+.menu a.ativo{background:var(--musgo);color:var(--cal)}
+.btn-menu{display:none;background:none;border:1px solid currentColor;border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;font-size:.88rem;cursor:pointer;color:inherit}
+@media (max-width:1100px){
+  .btn-menu{display:block}
+  .menu{display:none;position:absolute;left:12px;right:12px;top:70px;background:var(--cal);color:var(--tinta);flex-direction:column;gap:2px;padding:10px;border-radius:14px;box-shadow:0 20px 40px rgba(29,42,36,.25)}
+  .menu.aberto{display:flex}
+  .menu a{display:block;padding:12px 14px}
+}
+
+/* Abertura com fotos que se alternam */
+.abertura{position:relative;min-height:min(92vh,820px);display:flex;align-items:flex-end;color:var(--cal);overflow:hidden;background:var(--tinta)}
+.slides{position:absolute;inset:0}
+.slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity 1.6s ease, transform 9s linear}
+.slides img.on{opacity:1;transform:scale(1)}
+.abertura::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,42,36,.7) 0%,rgba(29,42,36,.15) 65%),linear-gradient(180deg,rgba(29,42,36,.55) 0%,rgba(29,42,36,.05) 35%,rgba(29,42,36,.35) 60%,rgba(29,42,36,.92) 100%)}
+.abertura .wrap{position:relative;z-index:2;width:100%;padding-top:140px;padding-bottom:56px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end}
+.abertura .rotulo{color:var(--nevoa)}
+.abertura h1{font-size:clamp(2.6rem,6.4vw,5.6rem);font-weight:800;margin:18px 0 22px;max-width:15ch}
+.abertura h1 span{color:var(--nevoa);font-weight:400}
+.abertura .lead{font-size:1.12rem;max-width:52ch;color:rgba(243,246,244,.9)}
+.acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font-weight:700;font-size:.95rem;text-decoration:none;border:2px solid transparent;transition:transform .25s var(--curva),background .25s,color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn-claro{background:var(--cal);color:var(--tinta)}
+.btn-claro:hover{background:var(--nevoa)}
+.btn-linha{border-color:rgba(243,246,244,.7);color:var(--cal)}
+.btn-linha:hover{background:rgba(243,246,244,.12)}
+.btn-verde{background:var(--musgo);color:var(--cal)}
+.btn-verde:hover{background:var(--tinta)}
+.seta{transition:transform .25s var(--curva)}
+.btn:hover .seta{transform:translateX(4px)}
+.pontos{display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+.pontos p{font-size:.85rem;color:var(--nevoa);text-align:right;min-height:1.4em}
+.pontos div{display:flex;gap:8px}
+.pontos button{width:34px;height:4px;border:0;border-radius:4px;background:rgba(243,246,244,.35);cursor:pointer;padding:0;position:relative;overflow:hidden}
+.pontos button::after{content:"";position:absolute;inset:0;background:var(--cal);transform:scaleX(0);transform-origin:0 50%}
+.pontos button.on::after{animation:carga 6s linear forwards}
+@keyframes carga{to{transform:scaleX(1)}}
+@media (max-width:760px){.abertura .wrap{grid-template-columns:1fr}.pontos{align-items:flex-start}.pontos p{text-align:left}}
+
+/* Faixa de números */
+.numeros{background:var(--tinta);color:var(--cal)}
+.numeros ul{list-style:none;max-width:var(--larg);margin:0 auto;padding:34px 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.numeros strong{display:block;font-family:var(--display);font-weight:700;font-size:clamp(2rem,3.4vw,2.8rem);letter-spacing:-.03em;color:var(--nevoa);font-variant-numeric:tabular-nums;line-height:1.1}
+.numeros span{font-size:.9rem;color:rgba(243,246,244,.75)}
+@media (max-width:760px){.numeros ul{grid-template-columns:1fr 1fr}}
+
+/* Seções */
+section{padding:100px 0;scroll-margin-top:70px}
+.cabeca{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:end;margin-bottom:48px}
+.cabeca h2{margin-top:16px}
+.cabeca p{color:var(--texto-suave);max-width:58ch;font-size:1.05rem}
+@media (max-width:900px){.cabeca{grid-template-columns:1fr;gap:18px}section{padding:70px 0}}
+
+/* Revelar ao rolar (só para o que começa fora da tela) */
+.pre{opacity:0;transform:translateY(28px)}
+.revela{transition:opacity .9s var(--curva),transform .9s var(--curva)}
+
+/* Linha do tempo interativa */
+.tempo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
+.tempo-trilho{display:flex;gap:0;margin:34px 0 26px;position:relative;overflow-x:auto;overflow-y:hidden;padding:6px 4px 10px;scrollbar-width:none;-ms-overflow-style:none}
+.tempo-trilho::-webkit-scrollbar{display:none}
+.tempo-trilho::before{content:"";position:absolute;left:0;right:0;top:27px;height:2px;background:var(--nevoa)}
+.tempo-trilho button{flex:1 0 76px;background:none;border:0;padding:0 6px;text-align:left;cursor:pointer;position:relative;font:inherit;color:var(--texto-suave)}
+.tempo-trilho button i{display:block;width:16px;height:16px;border-radius:50%;background:var(--cal);border:3px solid var(--salvia);margin:14px 0 12px;transition:transform .3s var(--curva),background .3s,border-color .3s}
+.tempo-trilho button b{display:block;font-family:var(--display);font-weight:700;font-size:1.15rem;color:var(--tinta);font-variant-numeric:tabular-nums}
+.tempo-trilho button[aria-selected="true"] i{background:var(--musgo);border-color:var(--musgo);transform:scale(1.35)}
+.tempo-trilho button[aria-selected="true"] b{color:var(--musgo)}
+.tempo-card{min-height:200px}
+.tempo-card h3{font-size:1.9rem;margin-bottom:12px}
+.tempo-card p{color:var(--texto-suave);max-width:54ch}
+.tempo-foto{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--nevoa)}
+.tempo-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s ease,transform 1.2s var(--curva)}
+.tempo-foto img.sai{opacity:0;transform:scale(1.04)}
+.tempo-nav{display:flex;gap:10px;margin-top:26px}
+.circ{width:48px;height:48px;border-radius:50%;border:2px solid var(--tinta);background:none;color:var(--tinta);font-size:1.1rem;cursor:pointer;transition:background .2s,color .2s}
+.circ:hover{background:var(--tinta);color:var(--cal)}
+@media (max-width:900px){.tempo{grid-template-columns:1fr}.tempo-foto{aspect-ratio:4/3;order:-1}}
+
+
+/* Curador */
+.curador{background:var(--branco)}
+.cur-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:56px;align-items:center}
+.cur-foto{margin:0;position:relative;border-radius:22px;overflow:hidden;aspect-ratio:16/10;background:var(--nevoa)}
+.cur-foto img{width:100%;height:100%;object-fit:cover;object-position:60% 40%}
+.cur-foto figcaption{position:absolute;left:12px;bottom:12px;background:rgba(29,42,36,.82);color:var(--cal);font-size:.82rem;font-weight:600;padding:8px 14px;border-radius:999px;backdrop-filter:blur(6px)}
+.cur-texto h2{margin:16px 0 8px}
+.cur-texto .filiacao{color:var(--musgo);font-weight:700;margin-bottom:18px}
+.cur-texto > p{color:var(--texto-suave);max-width:56ch}
+.jornada{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:passo}
+.jornada li{position:relative;padding:22px 12px 0 0;border-top:2px solid var(--nevoa);font-size:.88rem;color:var(--texto-suave);transition:border-color .3s}
+.jornada li::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--musgo)}
+.jornada li:hover{border-color:var(--musgo)}
+.jornada b{display:block;font-family:var(--display);font-size:1.05rem;color:var(--tinta);margin-bottom:4px;line-height:1.15}
+@media (max-width:1000px){.cur-grid{grid-template-columns:1fr;gap:32px}}
+@media (max-width:640px){.jornada{grid-template-columns:1fr;gap:0;border-left:2px solid var(--nevoa);margin-left:6px}.jornada li{border-top:0;padding:0 0 18px 22px}.jornada li::before{top:4px;left:-7px}}
+
+/* Faixa com foto em movimento */
+.faixa{position:relative;height:clamp(320px,55vw,560px);overflow:hidden;background:var(--tinta);color:var(--cal);display:flex;align-items:center}
+.faixa img{position:absolute;left:0;right:0;top:-15%;width:100%;height:130%;object-fit:cover;will-change:transform}
+.faixa::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,42,36,.85),rgba(29,42,36,.15))}
+.faixa .wrap{position:relative;z-index:2;width:100%}
+.faixa blockquote{margin:0;max-width:22ch;font-family:var(--display);font-weight:600;font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.08;letter-spacing:-.02em}
+.faixa cite{display:block;margin-top:18px;font-family:var(--corpo);font-style:normal;font-size:.95rem;color:var(--nevoa);max-width:44ch}
+
+/* Casa da Memória */
+.guarda{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:0 0 48px;padding:0;list-style:none}
+.guarda li{background:var(--branco);border-radius:18px;padding:24px;border:1px solid var(--nevoa);transition:transform .35s var(--curva),box-shadow .35s}
+.guarda li:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(29,42,36,.1)}
+.guarda .num{font-family:var(--display);font-weight:800;font-size:.9rem;color:var(--salvia);display:block;margin-bottom:22px}
+.guarda h3{margin-bottom:8px}
+.guarda p{font-size:.94rem;color:var(--texto-suave)}
+@media (max-width:980px){.guarda{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.guarda{grid-template-columns:1fr}}
+
+.mosaico{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:14px}
+.mosaico .foto:first-child{grid-row:span 2}
+.mosaico .foto:nth-child(4){grid-column:span 2}
+@media (max-width:820px){.mosaico{grid-template-columns:1fr 1fr;grid-template-rows:auto}.mosaico .foto:first-child{grid-row:auto;grid-column:span 2}.mosaico .foto:nth-child(4){grid-column:span 2}.mosaico .foto{height:240px}}
+
+/* Cartões de foto */
+.foto{position:relative;margin:0;border-radius:18px;overflow:hidden;background:var(--nevoa)}
+.foto button{all:unset;cursor:zoom-in;display:block;width:100%;height:100%}
+.foto img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--curva)}
+.foto:hover img{transform:scale(1.06)}
+.foto figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 18px 16px;color:var(--cal);font-size:.86rem;background:linear-gradient(180deg,transparent,rgba(29,42,36,.88));pointer-events:none}
+.foto figcaption b{display:block;font-family:var(--display);font-weight:700;font-size:1.08rem;letter-spacing:-.01em}
+.foto figcaption span{display:block;max-height:0;opacity:0;overflow:hidden;transition:max-height .45s var(--curva),opacity .35s}
+.foto:hover figcaption span,.foto:focus-within figcaption span{max-height:6em;opacity:1}
+@media (hover:none){.foto figcaption span{max-height:6em;opacity:1}}
+
+/* Paiol */
+.paiol{background:var(--tinta);color:var(--cal)}
+.paiol .rotulo{color:var(--nevoa)}
+.paiol .cabeca p{color:rgba(243,246,244,.78)}
+.placa-linha{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:70px}
+.placa-linha .foto{aspect-ratio:3/2}
+.placa{border-radius:18px;background:var(--musgo);padding:34px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.placa q{font-family:var(--display);font-weight:600;font-size:clamp(1.4rem,2.4vw,1.9rem);line-height:1.15;letter-spacing:-.01em;quotes:"“" "”"}
+.placa small{color:var(--nevoa);font-size:.9rem}
+@media (max-width:900px){.placa-linha{grid-template-columns:1fr}}
+
+/* Explorador com pontos clicáveis */
+.explorar h3{font-size:clamp(1.6rem,3vw,2.3rem);margin:14px 0 10px}
+.explorar > p{color:rgba(243,246,244,.78);max-width:60ch}
+.abas{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 20px}
+.abas button,.filtros button{font:inherit;font-size:.9rem;font-weight:700;padding:10px 18px;border-radius:999px;border:1.5px solid rgba(199,213,204,.45);background:transparent;color:var(--cal);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.abas button[aria-selected="true"],.filtros button[aria-pressed="true"]{background:var(--nevoa);border-color:var(--nevoa);color:var(--tinta)}
+.explorador{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.cena{position:relative;border-radius:18px;overflow:hidden;background:#0f1713}
+.cena img{width:100%}
+.alvo{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:0;background:var(--cal);color:var(--tinta);font:700 .85rem var(--corpo);cursor:pointer;box-shadow:0 0 0 0 rgba(243,246,244,.6);animation:pulso 2.4s infinite;transition:transform .25s var(--curva),background .2s}
+.alvo:hover,.alvo[aria-pressed="true"]{transform:scale(1.18);background:var(--nevoa);animation:none}
+.alvo[aria-pressed="true"]{background:var(--salvia);color:var(--cal)}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(243,246,244,.55)}70%{box-shadow:0 0 0 14px rgba(243,246,244,0)}100%{box-shadow:0 0 0 0 rgba(243,246,244,0)}}
+.ficha-peca{border-radius:18px;background:#26372f;padding:28px;display:flex;flex-direction:column;gap:14px}
+.ficha-peca .n{font-family:var(--display);font-weight:800;color:var(--salvia);font-size:.9rem}
+.ficha-peca h4{margin:0;font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:-.01em;line-height:1.1}
+.ficha-peca p{color:rgba(243,246,244,.82)}
+.ficha-peca ol{margin:auto 0 0;padding:0;list-style:none;display:grid;gap:4px;border-top:1px solid rgba(199,213,204,.2);padding-top:14px}
+.ficha-peca ol button{all:unset;cursor:pointer;display:flex;gap:10px;font-size:.9rem;color:rgba(243,246,244,.7);padding:4px 0}
+.ficha-peca ol button:hover,.ficha-peca ol button[aria-current="true"]{color:var(--cal)}
+.ficha-peca ol button span{width:22px;font-weight:700;color:var(--salvia)}
+.ficha-peca .troca{animation:entra .45s var(--curva)}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (max-width:900px){.explorador{grid-template-columns:1fr}.alvo{width:28px;height:28px;margin:-14px 0 0 -14px;font-size:.75rem}}
+
+.acervo-topo{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin:80px 0 22px}
+.acervo-topo h3{font-size:clamp(1.6rem,3vw,2.3rem)}
+.filtros{display:flex;flex-wrap:wrap;gap:8px}
+.contagem{font-size:.88rem;color:var(--nevoa);margin-bottom:16px}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.grade .foto{aspect-ratio:4/3;transition:opacity .35s,transform .45s var(--curva)}
+.grade .foto.sumindo{opacity:0;transform:scale(.96)}
+
+/* Propriedade: rolagem horizontal */
+.trilha{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 22px;margin:0 auto;max-width:var(--larg);scrollbar-width:thin;scrollbar-color:var(--salvia) transparent}
+.trilha .foto{flex:0 0 min(78vw,420px);aspect-ratio:3/4;scroll-snap-align:start}
+.trilha-nav{display:flex;gap:10px}
+
+
+/* Batatal */
+.regiao{background:var(--tinta);color:var(--cal)}
+.regiao .rotulo{color:var(--nevoa)}
+.regiao .cabeca p{color:rgba(243,246,244,.78)}
+.marcos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.marcos li{background:#26372f;border-radius:18px;padding:24px 22px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--salvia);transition:transform .35s var(--curva),background .3s}
+.marcos li:hover{transform:translateY(-4px);background:var(--musgo)}
+.marcos b{font-family:var(--display);font-size:1.7rem;letter-spacing:-.02em;color:var(--nevoa);font-variant-numeric:tabular-nums;line-height:1}
+.marcos h3{font-size:1.15rem}
+.marcos p{font-size:.9rem;color:rgba(243,246,244,.78)}
+.povos{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:56px;padding-top:44px;border-top:1px solid rgba(199,213,204,.2)}
+.povos h3{font-size:clamp(1.5rem,2.6vw,2rem)}
+.povos p{color:rgba(243,246,244,.82);max-width:58ch}
+.fontes{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.fontes a{display:flex;justify-content:space-between;gap:14px;align-items:baseline;color:var(--cal);text-decoration:none;padding:12px 0;border-bottom:1px solid rgba(199,213,204,.2);font-size:.93rem;transition:color .2s,padding .25s var(--curva)}
+.fontes a:hover{color:var(--nevoa);padding-left:6px}
+.fontes a span{color:var(--salvia);font-size:.82rem;white-space:nowrap}
+@media (max-width:1050px){.marcos{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:760px){.marcos{grid-template-columns:1fr 1fr}.povos{grid-template-columns:1fr;gap:28px}}
+@media (max-width:460px){.marcos{grid-template-columns:1fr}}
+
+/* Visite */
+.visite{background:var(--nevoa)}
+.visite-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.cartao{background:var(--cal);border-radius:22px;padding:32px;display:grid;gap:22px;margin-top:30px}
+.cartao dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cartao dt{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--musgo)}
+.cartao dd{margin:4px 0 0;font-weight:600}
+.pendente{display:inline-block;font-size:.84rem;font-weight:600;border:1.5px dashed var(--salvia);padding:3px 10px;border-radius:999px;color:var(--texto-suave)}
+.dicas{display:grid;gap:12px;padding:0;margin:26px 0 0;list-style:none}
+.dicas li{display:flex;gap:12px;color:var(--texto-suave)}
+.dicas li::before{content:"";flex:0 0 8px;height:8px;margin-top:.6em;border-radius:50%;background:var(--musgo)}
+.visite figure{margin:0;border-radius:22px;overflow:hidden;aspect-ratio:3/4}
+.visite figure img{width:100%;height:100%;object-fit:cover}
+@media (max-width:900px){.visite-grid{grid-template-columns:1fr}.visite figure{aspect-ratio:4/3}.cartao dl{grid-template-columns:1fr}}
+
+footer{background:var(--tinta);color:var(--nevoa);padding:46px 0;font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
+footer strong{font-family:var(--display);color:var(--cal);font-size:1.2rem;display:block;margin-bottom:4px}
+
+/* Visor de fotos */
+dialog{border:0;padding:0;background:transparent;max-width:min(1150px,94vw);width:100%;color:var(--cal)}
+dialog::backdrop{background:rgba(15,23,19,.94)}
+dialog[open]{animation:entra .35s var(--curva)}
+.visor{display:grid;gap:14px}
+.visor img{max-height:78vh;width:auto;margin:0 auto;border-radius:10px;touch-action:pan-y}
+.visor-barra{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.visor-barra p{font-size:.95rem;color:var(--nevoa)}
+.visor-barra p b{display:block;font-family:var(--display);color:var(--cal);font-size:1.15rem}
+.visor-botoes{display:flex;gap:8px;flex-shrink:0}
+.visor-botoes button{font:inherit;font-weight:700;font-size:.9rem;background:rgba(243,246,244,.1);color:var(--cal);border:1px solid rgba(243,246,244,.3);border-radius:999px;padding:9px 16px;cursor:pointer}
+.visor-botoes button:hover{background:rgba(243,246,244,.22)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .pre{opacity:1;transform:none}
+  .slides img{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="progresso" id="progresso"></div>
+
+<header class="topo" id="topo">
+  <div class="wrap">
+    <a class="marca" href="#inicio">Casa da Memória<small>Família Sgulmaro · Batatal</small></a>
+    <button class="btn-menu" id="btn-menu" aria-expanded="false" aria-controls="menu">Menu</button>
+    <ul class="menu" id="menu">
+      <li><a href="#historia">História</a></li>
+      <li><a href="#casa-da-memoria">Casa da Memória</a></li>
+      <li><a href="#paiol">Paiol dos Couros</a></li>
+      <li><a href="#propriedade">Propriedade</a></li>
+      <li><a href="#batatal">Batatal</a></li>
+      <li><a href="#curador">O curador</a></li>
+      <li><a href="#visite">Visite</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="abertura">
+    <div class="slides" id="slides">
+      <img class="on" src="img/casa-grande.jpg" alt="Casa grande de paredes brancas e janelas azuis, com morros ao fundo." data-legenda="A casa grande da antiga Fazenda São Venancio">
+      <img src="img/paiol-fachada.jpg" alt="Paiol dos Couros: construção branca com estrutura de madeira e telhado avermelhado." data-legenda="O Paiol dos Couros, construído entre 1890 e 1900">
+      <img src="img/casa-moinho.jpg" alt="Casa do moinho, de paredes ocre, entre bananeiras." data-legenda="A casa do moinho, entre bananeiras">
+      <img src="img/riacho.jpg" alt="Riacho entre pedras com uma pequena ponte e a casa grande ao fundo." data-legenda="O riacho que corre diante da casa grande">
+    </div>
+    <div class="wrap">
+      <div>
+        <p class="rotulo">Batatal · Alfredo Chaves · ES</p>
+        <h1>Casa da Memória <span>da Família Sgulmaro</span></h1>
+        <p class="lead">Fotografias antigas, documentos da fazenda e registros do comércio de café e banana. Ao lado, o Paiol dos Couros guarda as ferramentas de quem trabalhou nesta terra.</p>
+        <div class="acoes">
+          <a class="btn btn-claro" href="#paiol">Explore o acervo <span class="seta">→</span></a>
+          <a class="btn btn-linha" href="#visite">Planeje sua visita</a>
+        </div>
+      </div>
+      <div class="pontos">
+        <p id="slide-legenda">A casa grande da antiga Fazenda São Venancio</p>
+        <div id="slide-pontos"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="numeros">
+    <ul>
+      <li><strong data-conta="1847">1847</strong><span>nasce Alessandro Sgulmaro, patriarca da família</span></li>
+      <li><strong>1890–1900</strong><span>construção do Paiol dos Couros</span></li>
+      <li><strong data-conta="1926">1926</strong><span>escritura da Fazenda São Venancio</span></li>
+      <li><strong data-conta="2">2</strong><span>espaços de memória, lado a lado</span></li>
+    </ul>
+  </div>
+
+  <section id="historia">
+    <div class="wrap tempo">
+      <div>
+        <p class="rotulo">História</p>
+        <h2 style="margin-top:16px">Uma família, uma fazenda e o trabalho no campo</h2>
+        <div class="tempo-trilho" role="tablist" aria-label="Linha do tempo" id="trilho"></div>
+        <div class="tempo-card" id="tempo-card" aria-live="polite"></div>
+        <div class="tempo-nav">
+          <button class="circ" type="button" id="tempo-ant" aria-label="Momento anterior">←</button>
+          <button class="circ" type="button" id="tempo-prox" aria-label="Próximo momento">→</button>
+        </div>
+      </div>
+      <div class="tempo-foto"><img id="tempo-img" src="img/busto-1.jpg" alt=""></div>
+    </div>
+  </section>
+
+
+
+  <div class="faixa" aria-label="Trecho do documento de 1926">
+    <img src="img/documento-2.jpg" alt="" data-paralaxe>
+    <div class="wrap">
+      <blockquote>Casas, paióis, engenho de pilar café, moinho, pasto e cafezal.
+        <cite>Benfeitorias da Fazenda São Venancio descritas no extrato da escritura de 8 de maio de 1926, guardado na Casa da Memória.</cite>
+      </blockquote>
+    </div>
+  </div>
+
+  <section id="casa-da-memoria">
+    <div class="wrap">
+      <div class="cabeca">
+        <div>
+          <p class="rotulo">Casa da Memória</p>
+          <h2>Uma sala onde a família guarda seus registros</h2>
+        </div>
+        <p>Estantes de livros e caixas de arquivo dividem espaço com painéis cobertos de fotografias: retratos, casamentos, festas, encontros de família e imagens das construções da fazenda, de diferentes épocas.</p>
+      </div>
+      <ul class="guarda">
+        <li><span class="num">01</span><h3>Fotografias antigas</h3><p>Retratos e cenas de família, em preto e branco e coloridas, montadas em grandes painéis.</p></li>
+        <li><span class="num">02</span><h3>Registros da propriedade</h3><p>Escrituras e documentos que contam como a fazenda foi formada e passou de mão em mão.</p></li>
+        <li><span class="num">03</span><h3>Café e banana</h3><p>Registros de compra e venda das safras que sustentaram a fazenda e a região.</p></li>
+        <li><span class="num">04</span><h3>Livros e arquivos</h3><p>Coleções da família, incluindo anais do Poder Legislativo municipal guardados por Osvaldo Sgulmaro.</p></li>
+      </ul>
+      <div class="mosaico" data-galeria="memoria"></div>
+    </div>
+  </section>
+
+  <section class="paiol" id="paiol">
+    <div class="wrap">
+      <div class="cabeca">
+        <div>
+          <p class="rotulo">Paiol dos Couros</p>
+          <h2>Como o trabalho era feito antigamente</h2>
+        </div>
+        <p>Ao lado da Casa da Memória, o antigo paiol guarda ferramentas de carpintaria e da roça, utensílios de cozinha, máquinas de costura e peças de montaria e carga.</p>
+      </div>
+
+      <div class="placa-linha">
+        <figure class="foto"><button type="button" data-abrir="paiol-placa" aria-label="Ampliar a fachada do paiol"><img src="img/paiol-placa.jpg" alt="Fachada branca do paiol com porta de madeira e a placa de identificação." loading="lazy"></button></figure>
+        <div class="placa">
+          <q>O Paiol dos Couros foi edificado nos anos entre 1.890 a 1.900.</q>
+          <small>Texto da placa na fachada, assinada por José Sgulmaro.</small>
+        </div>
+      </div>
+
+      <div class="explorar">
+        <p class="rotulo">Explore as paredes</p>
+        <h3>Toque nos pontos para conhecer as peças</h3>
+        <p>As paredes do paiol funcionam como vitrines. Escolha uma delas e toque nos números para saber para que servia cada objeto.</p>
+        <div class="abas" role="tablist" aria-label="Escolha a parede" id="abas"></div>
+        <div class="explorador">
+          <div class="cena" id="cena"><img id="cena-img" src="img/paiol-ferramentas.jpg" alt="" loading="lazy"></div>
+          <div class="ficha-peca" id="ficha"></div>
+        </div>
+      </div>
+
+      <div class="acervo-topo">
+        <h3>Todo o acervo do paiol</h3>
+        <div class="filtros" role="group" aria-label="Filtrar peças do acervo">
+          <button type="button" data-filtro="todos" aria-pressed="true">Todas</button>
+          <button type="button" data-filtro="oficina" aria-pressed="false">Oficina e roça</button>
+          <button type="button" data-filtro="casa" aria-pressed="false">Cozinha e casa</button>
+          <button type="button" data-filtro="montaria" aria-pressed="false">Montaria e carga</button>
+          <button type="button" data-filtro="edificio" aria-pressed="false">O edifício</button>
+        </div>
+      </div>
+      <p class="contagem" id="contagem" aria-live="polite"></p>
+      <div class="grade" data-galeria="paiol"></div>
+    </div>
+  </section>
+
+  <section id="propriedade">
+    <div class="wrap">
+      <div class="cabeca">
+        <div>
+          <p class="rotulo">A propriedade</p>
+          <h2>A paisagem em volta do acervo</h2>
+        </div>
+        <div>
+          <p>A visita continua do lado de fora: a casa grande, o riacho, a casa do moinho, o busto do patriarca e os marcos de pedra da antiga fazenda.</p>
+          <div class="trilha-nav" style="margin-top:20px">
+            <button class="circ" type="button" data-trilha="-1" aria-label="Fotos anteriores">←</button>
+            <button class="circ" type="button" data-trilha="1" aria-label="Próximas fotos">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="trilha" id="trilha" data-galeria="propriedade"></div>
+  </section>
+
+
+  <section class="regiao" id="batatal">
+    <div class="wrap">
+      <div class="cabeca">
+        <div>
+          <p class="rotulo">Batatal e Alfredo Chaves</p>
+          <h2>O lugar onde essa história acontece</h2>
+        </div>
+        <p>A fazenda da família Sgulmaro fica no vale do Batatal, uma das comunidades rurais de Alfredo Chaves. Jornais antigos e documentos do Arquivo Público do Estado ajudam a contar como a região se formou.</p>
+      </div>
+      <ol class="marcos">
+        <li><b>1880</b><h3>Colônia Castello</h3><p>Fundada nas cabeceiras do rio Benevente e emancipada em 1881, segundo o Jornal do Agricultor de 1886, que a associa à povoação de Alfredo Chaves.</p></li>
+        <li><b>1887</b><h3>Estradas e pontes</h3><p>Entre 1887 e 1890, documentos do Arquivo Público registram obras de estrada entre Batatal e a povoação e uma ponte sobre o rio Batatal.</p></li>
+        <li><b>1891</b><h3>Nasce o município</h3><p>Alfredo Chaves é criado em 24 de janeiro de 1891, desmembrado de Benevente, atual Anchieta.</p></li>
+        <li><b>1922</b><h3>Barra do Batatal</h3><p>Uma descrição do vale do Benevente publicada no Diário da Manhã passa pela Barra do Batatal a caminho da vila.</p></li>
+        <li><b>1927</b><h3>Escola de Alto Batatal</h3><p>Um ato de 9 de abril de 1927 nomeia uma professora para a escola mista de Alto Batatal.</p></li>
+      </ol>
+      <div class="povos">
+        <div>
+          <h3>Muitas origens</h3>
+          <p style="margin-top:14px">A história de Batatal não é só italiana. Estudos registram também famílias de origem alemã entre os primeiros moradores, e pesquisas sobre Alfredo Chaves lembram a presença indígena anterior às colônias e a cultura afro-brasileira do município. A memória guardada pela família Sgulmaro é uma parte desse quadro maior.</p>
+        </div>
+        <div>
+          <h3>Para saber mais</h3>
+          <ul class="fontes" style="margin-top:14px">
+            <li><a href="https://www.camaraalfredochaves.es.gov.br/uploads/documento/20220711155311-alfredo-chaves-uma-visao-historica-e-politica.pdf" target="_blank" rel="noopener">Pessali, Alfredo Chaves: uma visão histórica e política <span>livro · PDF</span></a></li>
+            <li><a href="https://www.snh2025.anpuh.org/resources/anais/11/snh2025/1750677287_ARQUIVO_782485d5319c35174b933cd5ab7670da.pdf" target="_blank" rel="noopener">Marion, Imigrantes italianos em Alfredo Chaves <span>artigo · 2025</span></a></li>
+            <li><a href="https://www.ibge.gov.br/biblioteca/visualizacao/dtb/espiritosanto/afredochaves.pdf" target="_blank" rel="noopener">IBGE, histórico de Alfredo Chaves <span>PDF</span></a></li>
+            <li><a href="https://ape.es.gov.br/Media/ape/PDF/Cat%C3%A1logos/Cat%C3%A1logo_Navega%C3%A7%C3%A3o%20e%20Povoamento_15.03.2021.pdf#page=11" target="_blank" rel="noopener">Arquivo Público do ES, Navegação e Povoamento <span>catálogo</span></a></li>
+            <li><a href="https://repositorio.ufes.br/server/api/core/bitstreams/59da0321-fbf2-430d-a905-ecfdde04edc9/content" target="_blank" rel="noopener">Bettcher, Cartografias da alegria <span>dissertação · 2021</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="curador" id="curador">
+    <div class="wrap cur-grid">
+      <figure class="cur-foto">
+        <img src="img/curador.jpg" alt="José Sgulmaro Neto, de cabelos ruivos e óculos, sentado diante da casa grande de janelas azuis." loading="lazy">
+        <figcaption>Diante da casa grande onde nasceu</figcaption>
+      </figure>
+      <div class="cur-texto">
+        <p class="rotulo">O curador</p>
+        <h2>José Sgulmaro Neto</h2>
+        <p class="filiacao">Filho de Alexandre Sgulmaro e Iolanda Dalvi Sgulmaro</p>
+        <p>Nascido em 1954 na casa principal da fazenda, José é a geração que hoje cuida do acervo da família. Por volta dos 18 anos, decidiu conhecer o mundo e partiu em viagem pelo Brasil. Foi caminhoneiro e depois entrou para o comércio, onde se tornou um grande comerciante de hortifrúti, sempre buscando o desenvolvimento e os negócios com a região onde nasceu.</p>
+        <p style="margin-top:14px">Hoje vive no Rio de Janeiro, de onde exerce sua profissão, e é o curador da Casa da Memória da Família Sgulmaro e do Paiol dos Couros.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <ol class="jornada" aria-label="Trajetória de José Sgulmaro Neto">
+        <li><b>1954</b>Nasce na casa principal da fazenda, em Batatal</li>
+        <li><b>Cerca de 18 anos</b>Parte para conhecer o Brasil</li>
+        <li><b>Na estrada</b>Trabalha como caminhoneiro</li>
+        <li><b>No comércio</b>Torna-se grande comerciante de hortifrúti, ligado à sua região</li>
+        <li><b>Hoje</b>Vive no Rio de Janeiro e cuida da memória da família</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="visite" id="visite">
+    <div class="wrap visite-grid">
+      <div>
+        <p class="rotulo">Visite</p>
+        <h2 style="margin-top:16px">Como conhecer a Casa da Memória da Família Sgulmaro</h2>
+        <p style="margin-top:18px;color:var(--texto-suave);max-width:56ch">O acervo fica na comunidade de Batatal, zona rural de Alfredo Chaves. As visitas são acompanhadas pela família, que conta a história de cada peça.</p>
+        <div class="cartao">
+          <dl>
+            <div><dt>Onde</dt><dd>Batatal, Alfredo Chaves – ES</dd></div>
+            <div><dt>Curador</dt><dd>José Sgulmaro Neto</dd></div>
+            <div><dt>Horários e agendamento</dt><dd><span class="pendente">A confirmar com o responsável</span></dd></div>
+            <div><dt>Contato</dt><dd><span class="pendente">A confirmar com o responsável</span></dd></div>
+          </dl>
+          <div><a class="btn btn-verde" href="https://maps.app.goo.gl/jDMy7rrqtzntET2F7" target="_blank" rel="noopener">Abrir no Google Maps <span class="seta">→</span></a></div>
+        </div>
+        <ul class="dicas">
+          <li>Combine a visita com antecedência; o acervo é cuidado pela própria família.</li>
+          <li>Grupos de escolas são bem-vindos para conhecer a história do trabalho no campo.</li>
+          <li>Não toque nas peças sem orientação: muitas têm mais de cem anos.</li>
+        </ul>
+      </div>
+      <figure><img src="img/riacho.jpg" alt="Riacho entre pedras com uma pequena ponte; ao fundo, a casa branca de janelas azuis entre árvores." loading="lazy"></figure>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong>Casa da Memória da Família Sgulmaro</strong>e Paiol dos Couros · Batatal, Alfredo Chaves – ES</div>
+    <p>Fotografias e site: Filipe Dias Pereira Camuzzi<br>Projeto de Extensão II · Ciência da Computação · 2026</p>
+  </div>
+</footer>
+
+<dialog id="visor" aria-label="Fotografia ampliada">
+  <div class="visor">
+    <img id="visor-img" src="" alt="">
+    <div class="visor-barra">
+      <p id="visor-legenda"></p>
+      <div class="visor-botoes">
+        <button type="button" id="ant" aria-label="Foto anterior">←</button>
+        <button type="button" id="prox" aria-label="Próxima foto">→</button>
+        <button type="button" id="fechar">Fechar</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const semMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- Dados do acervo ---------- */
+const ACERVO = [
+  {id:"memoria-3", galeria:"memoria", titulo:"Painel da família", texto:"Retratos, casamentos, festas e encontros de várias gerações reunidos em um só painel.", alt:"Painel coberto por dezenas de fotografias de família em molduras variadas."},
+  {id:"memoria-1", galeria:"memoria", titulo:"Biblioteca e arquivo", texto:"Estantes com livros, caixas identificadas por nome e fotografias emolduradas.", alt:"Sala com estantes de livros e caixas de arquivo; na parede, fotografias emolduradas."},
+  {id:"memoria-2", galeria:"memoria", titulo:"Sala de exposição", texto:"Painéis de fotografias e uma mesa para receber visitantes.", alt:"Sala com painel central de fotografias e uma mesa branca com cadeiras."},
+  {id:"documento-1", galeria:"memoria", titulo:"Escritura 01", texto:"Extrato da escritura da Fazenda São Venancio, guardado em pasta de arquivo.", alt:"Folha com extrato manuscrito dentro de capa plástica."},
+  {id:"documento-2", galeria:"extra", titulo:"Extrato da escritura de 1926", texto:"Fazenda São Venancio, Alfredo Chaves. Compra e venda por escritura pública.", alt:"Extrato manuscrito da escritura da Fazenda São Venancio."},
+
+  {id:"paiol-ferramentas", galeria:"paiol", cat:"oficina", titulo:"Parede de ferramentas", texto:"Serras, trados, alicates, foices e níveis da carpintaria e da roça.", alt:"Parede de tábuas com dezenas de ferramentas antigas penduradas."},
+  {id:"paiol-painel", galeria:"paiol", cat:"oficina", titulo:"Polias, pedais e raladores", texto:"Pedais de máquinas de costura Singer, polias, raladores e um fole.", alt:"Painel de madeira com polias, pedais Singer, raladores e frigideiras."},
+  {id:"paiol-cocho", galeria:"paiol", cat:"oficina", titulo:"Peças de madeira", texto:"Uma grande caixa de madeira e componentes de engrenagem.", alt:"Grande caixa retangular de madeira em pé, com peças dentadas embaixo."},
+  {id:"paiol-utensilios", galeria:"paiol", cat:"casa", titulo:"Cozinha e costura", texto:"Panelas, caldeirões, ferros de passar a brasa e máquinas de costura.", alt:"Estante rústica com panelas, caldeirões, ferros de passar e máquinas de costura."},
+  {id:"paiol-selas", galeria:"paiol", cat:"montaria", titulo:"Selas e cangalhas", texto:"Armações de madeira e couro para montar e levar carga nos animais.", alt:"Armações de madeira e peças de couro penduradas em vigas."},
+  {id:"paiol-estribo", galeria:"paiol", cat:"montaria", titulo:"Estribo ornamentado", texto:"Estribo de metal com desenho vazado de folhagens e uma estrela.", alt:"Estribo metálico dourado com ornamentos vazados, pendurado por corrente."},
+  {id:"paiol-placa", galeria:"paiol", cat:"edificio", titulo:"A fachada e a placa", texto:"Porta de tábuas, janela de madeira e a placa que data a construção.", alt:"Fachada branca com porta de madeira escura, janela e placa."},
+  {id:"paiol-estabulo", galeria:"paiol", cat:"edificio", titulo:"Construção sobre pilares", texto:"O piso elevado deixa embaixo um espaço que ainda abriga os cavalos.", alt:"Construção elevada sobre pilares, com dois cavalos à sombra."},
+
+  {id:"casa-grande", galeria:"propriedade", titulo:"Casa grande", texto:"Paredes caiadas, janelas azuis e varanda voltada para os morros.", alt:"Casa branca com janelas azuis e varanda, com morros ao fundo."},
+  {id:"riacho", galeria:"propriedade", grande:true, titulo:"O riacho", texto:"A água corre entre as pedras diante do caminho para a casa.", alt:"Riacho entre pedras com uma pequena ponte e a casa ao fundo."},
+  {id:"casa-moinho", galeria:"propriedade", titulo:"Casa do moinho", texto:"Paredes ocre e telhado de duas águas, entre bananeiras.", alt:"Pequena casa de paredes ocre em terreno inclinado, com bananeiras atrás."},
+  {id:"busto-2", galeria:"propriedade", grande:true, titulo:"Busto do patriarca", texto:"Alessandro Sgulmaro (1847–1932), homenagem do neto Alexandre.", alt:"Busto de Alessandro Sgulmaro sobre pedestal com placa."},
+  {id:"paiol-fachada", galeria:"propriedade", grande:true, titulo:"Paiol dos Couros", texto:"O paiol e a área coberta ao lado, diante dos morros.", alt:"Paiol de paredes brancas e telhado avermelhado com área coberta ao lado."},
+  {id:"marco", galeria:"propriedade", titulo:"Marco de pedra", texto:"Marco que a família associa à antiga senzala da fazenda.", alt:"Pequeno bloco de pedra fincado no chão coberto de folhas secas."}
+];
+const porId = Object.fromEntries(ACERVO.map(f => [f.id, f]));
+const arquivo = (f, peq) => `img/${f.id}${peq && !f.grande ? "-p" : ""}.jpg`;
+
+/* ---------- Linha do tempo ---------- */
+const MOMENTOS = [
+  {ano:"1847", titulo:"Nasce o patriarca", texto:"Alessandro Sgulmaro nasce em 12 de maio de 1847. A família o lembra como seu patriarca, e um busto em sua homenagem, oferecido pelo neto Alexandre Sgulmaro, fica no jardim da propriedade.", img:"busto-1", alt:"Busto metálico de Alessandro Sgulmaro, de chapéu e bigode."},
+  {ano:"1890", titulo:"O Paiol dos Couros", texto:"Entre 1890 e 1900 é construído o Paiol dos Couros, segundo a placa assinada por José Sgulmaro. Hoje ele abriga as ferramentas e os utensílios do acervo.", img:"paiol-placa", alt:"Fachada do paiol com a placa de identificação."},
+  {ano:"1926", titulo:"A escritura da fazenda", texto:"Em 8 de maio de 1926, uma escritura pública de compra e venda registra a Fazenda São Venancio, em Alfredo Chaves, com casas, paióis, engenho de pilar café, moinho, pasto e cafezal.", img:"documento-2", alt:"Extrato manuscrito da escritura de 1926."},
+  {ano:"1932", titulo:"A despedida", texto:"Alessandro Sgulmaro falece em 19 de julho de 1932. A placa do busto registra as duas datas e a homenagem do neto.", img:"busto-2", alt:"Busto sobre pedestal com a placa e as datas de nascimento e falecimento."},
+  {ano:"1954", titulo:"Nasce o curador", texto:"José Sgulmaro Neto, filho de Alexandre Sgulmaro e Iolanda Dalvi Sgulmaro, nasce na casa principal da fazenda. Décadas depois, ele se tornaria o curador do acervo da família.", img:"casa-grande", alt:"Casa grande de paredes brancas e janelas azuis."},
+  {ano:"Hoje", titulo:"A memória aberta à comunidade", texto:"A família reúne fotografias, documentos e objetos na Casa da Memória e no Paiol dos Couros, para que moradores, estudantes e visitantes conheçam como se vivia e se trabalhava em Batatal.", img:"memoria-3", alt:"Painel de fotografias de família na Casa da Memória."}
+];
+const trilho = document.getElementById("trilho");
+const tempoCard = document.getElementById("tempo-card");
+const tempoImg = document.getElementById("tempo-img");
+let momento = 0;
+trilho.innerHTML = MOMENTOS.map((m, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}"><i></i><b>${m.ano}</b></button>`).join("");
+function irMomento(i){
+  momento = (i + MOMENTOS.length) % MOMENTOS.length;
+  const m = MOMENTOS[momento];
+  trilho.querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-selected", String(j === momento)));
+  tempoCard.innerHTML = `<div class="troca"><h3>${m.titulo}</h3><p>${m.texto}</p></div>`;
+  tempoImg.classList.add("sai");
+  const nova = new Image();
+  nova.onload = () => { tempoImg.src = nova.src; tempoImg.alt = m.alt; requestAnimationFrame(() => tempoImg.classList.remove("sai")); };
+  nova.src = `img/${m.img}.jpg`;
+}
+trilho.addEventListener("click", e => { const b = e.target.closest("[data-i]"); if (b) irMomento(+b.dataset.i); });
+document.getElementById("tempo-ant").onclick = () => irMomento(momento - 1);
+document.getElementById("tempo-prox").onclick = () => irMomento(momento + 1);
+tempoCard.innerHTML = `<div><h3>${MOMENTOS[0].titulo}</h3><p>${MOMENTOS[0].texto}</p></div>`;
+tempoImg.alt = MOMENTOS[0].alt;
+
+/* ---------- Galerias ---------- */
+function cartao(f, peq = true){
+  return `<figure class="foto" data-id="${f.id}">
+    <button type="button" data-abrir="${f.id}" aria-label="Ampliar: ${f.titulo}">
+      <img src="${arquivo(f, peq)}" alt="${f.alt}" loading="lazy">
+    </button>
+    <figcaption><b>${f.titulo}</b><span>${f.texto}</span></figcaption>
+  </figure>`;
+}
+function desenhar(nome, filtro = "todos"){
+  const alvo = document.querySelector(`[data-galeria="${nome}"]`);
+  const itens = ACERVO.filter(f => f.galeria === nome && (filtro === "todos" || f.cat === filtro));
+  alvo.innerHTML = itens.map(f => cartao(f, nome !== "memoria" || f.id !== "memoria-3")).join("");
+  alvo.dataset.ids = itens.map(f => f.id).join(",");
+  return itens.length;
+}
+desenhar("memoria");
+desenhar("propriedade");
+
+const grade = document.querySelector('[data-galeria="paiol"]');
+const contagem = document.getElementById("contagem");
+function filtrarPaiol(filtro){
+  const aplicar = () => {
+    const n = desenhar("paiol", filtro);
+    contagem.textContent = n === 1 ? "1 fotografia" : `${n} fotografias`;
+    grade.querySelectorAll(".foto").forEach((el, i) => {
+      el.classList.add("sumindo");
+      setTimeout(() => el.classList.remove("sumindo"), 40 + i * 60);
+    });
+  };
+  document.querySelectorAll("[data-filtro]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filtro === filtro)));
+  const atuais = grade.querySelectorAll(".foto");
+  if (!atuais.length || semMovimento) return aplicar();
+  atuais.forEach(el => el.classList.add("sumindo"));
+  setTimeout(aplicar, 280);
+}
+filtrarPaiol("todos");
+document.querySelector(".filtros").addEventListener("click", e => {
+  const b = e.target.closest("[data-filtro]");
+  if (b && b.getAttribute("aria-pressed") !== "true") filtrarPaiol(b.dataset.filtro);
+});
+
+const trilha = document.getElementById("trilha");
+document.querySelectorAll("[data-trilha]").forEach(b => b.addEventListener("click", () => {
+  trilha.scrollBy({left: +b.dataset.trilha * Math.min(trilha.clientWidth * .8, 440), behavior: semMovimento ? "auto" : "smooth"});
+}));
+
+/* ---------- Explorador de paredes (pontos sobre a foto, em % da imagem) ---------- */
+const PAREDES = [
+  {id:"paiol-ferramentas", nome:"Parede de ferramentas", alt:"Parede de tábuas com ferramentas antigas penduradas.", pecas:[
+    {x:70, y:40, nome:"Serras traçadoras", texto:"As serras longas, de dentes grandes, eram usadas por duas pessoas, uma em cada ponta, para cortar troncos grossos."},
+    {x:78, y:15, nome:"Serrotes", texto:"Serrotes de mão, de vários tamanhos, para cortar tábuas e fazer acabamentos na carpintaria."},
+    {x:49, y:40, nome:"Foices e lâminas curvas", texto:"Lâminas curvas para roçar o mato, limpar o pasto e cortar galhos na lavoura."},
+    {x:37, y:61, nome:"Arco de pua", texto:"A furadeira manual: girando a manivela, a broca abria furos na madeira para encaixes e cavilhas."},
+    {x:38, y:74, nome:"Alicates e torqueses", texto:"Uma fileira inteira de alicates, usados para dobrar arame, arrancar pregos e consertar cercas e arreios."},
+    {x:4, y:47, nome:"Níveis", texto:"Réguas com bolha para conferir se paredes, portas e prateleiras estavam no prumo."}
+  ]},
+  {id:"paiol-utensilios", nome:"Estante da cozinha", alt:"Estante rústica com panelas, caldeirões, máquinas de costura e ferros de passar.", pecas:[
+    {x:14, y:36, nome:"Barril de madeira", texto:"Pequeno barril de aduelas e aros de ferro, usado para guardar líquidos e mantimentos."},
+    {x:25, y:38, nome:"Moedor de manivela", texto:"Aparelho de mesa com rolos e manivela, movido à mão para moer ou prensar alimentos."},
+    {x:49, y:39, nome:"Panelas de ferro", texto:"Panelas pesadas com tampa, que iam direto ao fogão a lenha e conservavam o calor por muito tempo."},
+    {x:73, y:36, nome:"Máquinas de costura", texto:"Máquinas manuais de diferentes modelos, com as quais se faziam e consertavam as roupas da casa."},
+    {x:22, y:80, nome:"Caldeirões", texto:"Caldeirões grandes para cozinhar em quantidade, ferver água e preparar alimentos para muita gente."},
+    {x:80, y:83, nome:"Ferros de passar a brasa", texto:"Ferros com corpo oco: dentro se colocavam brasas do fogão, e a chaminé no alto deixava o ar circular."}
+  ]}
+];
+const abas = document.getElementById("abas");
+const cena = document.getElementById("cena");
+const cenaImg = document.getElementById("cena-img");
+const ficha = document.getElementById("ficha");
+let parede = 0;
+abas.innerHTML = PAREDES.map((p, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-p="${i}">${p.nome}</button>`).join("");
+function mostrarPeca(i){
+  const p = PAREDES[parede], c = p.pecas[i];
+  cena.querySelectorAll(".alvo").forEach((a, j) => a.setAttribute("aria-pressed", String(j === i)));
+  ficha.innerHTML = `
+    <div class="troca"><span class="n">${String(i + 1).padStart(2, "0")} / ${String(p.pecas.length).padStart(2, "0")}</span>
+    <h4>${c.nome}</h4><p style="margin-top:10px">${c.texto}</p></div>
+    <ol>${p.pecas.map((q, j) => `<li><button type="button" data-peca="${j}" aria-current="${j === i}"><span>${j + 1}</span>${q.nome}</button></li>`).join("")}</ol>`;
+}
+function abrirParede(i){
+  parede = i;
+  const p = PAREDES[i];
+  abas.querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-selected", String(j === i)));
+  cenaImg.src = `img/${p.id}.jpg`;
+  cenaImg.alt = p.alt;
+  cena.querySelectorAll(".alvo").forEach(a => a.remove());
+  p.pecas.forEach((c, j) => {
+    const a = document.createElement("button");
+    a.type = "button"; a.className = "alvo"; a.textContent = j + 1;
+    a.style.left = c.x + "%"; a.style.top = c.y + "%";
+    a.setAttribute("aria-label", c.nome);
+    a.addEventListener("click", () => mostrarPeca(j));
+    cena.appendChild(a);
+  });
+  mostrarPeca(0);
+}
+abas.addEventListener("click", e => { const b = e.target.closest("[data-p]"); if (b) abrirParede(+b.dataset.p); });
+ficha.addEventListener("click", e => { const b = e.target.closest("[data-peca]"); if (b) mostrarPeca(+b.dataset.peca); });
+abrirParede(0);
+
+/* ---------- Abertura: fotos que se alternam ---------- */
+const slides = [...document.querySelectorAll("#slides img")];
+const slidePontos = document.getElementById("slide-pontos");
+const slideLegenda = document.getElementById("slide-legenda");
+let slide = 0, relogio;
+slidePontos.innerHTML = slides.map((s, i) => `<button type="button" aria-label="Mostrar foto ${i + 1}" class="${i === 0 ? "on" : ""}"></button>`).join("");
+const botoesSlide = [...slidePontos.children];
+function irSlide(i){
+  slides[slide].classList.remove("on"); botoesSlide[slide].classList.remove("on");
+  slide = (i + slides.length) % slides.length;
+  slides[slide].classList.add("on");
+  void botoesSlide[slide].offsetWidth; botoesSlide[slide].classList.add("on");
+  slideLegenda.textContent = slides[slide].dataset.legenda;
+  clearTimeout(relogio);
+  if (!semMovimento) relogio = setTimeout(() => irSlide(slide + 1), 6000);
+}
+botoesSlide.forEach((b, i) => b.addEventListener("click", () => irSlide(i)));
+if (!semMovimento) relogio = setTimeout(() => irSlide(1), 6000);
+
+/* ---------- Números que contam ---------- */
+function contar(el){
+  const fim = +el.dataset.conta, ini = fim > 100 ? fim - 60 : 0, t0 = performance.now(), dur = 1400;
+  const passo = t => {
+    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(ini + (fim - ini) * e);
+    if (k < 1) requestAnimationFrame(passo);
+  };
+  requestAnimationFrame(passo);
+}
+
+/* ---------- Revelar ao rolar ---------- */
+const observador = new IntersectionObserver(entradas => {
+  entradas.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.remove("pre");
+    if (en.target.dataset.conta) contar(en.target);
+    observador.unobserve(en.target);
+  });
+}, {threshold: .15});
+if (!semMovimento){
+  const altura = innerHeight;
+  document.querySelectorAll(".cabeca, .guarda li, .mosaico, .tempo > *, .cur-grid > *, .jornada, .placa-linha, .explorar, .grade, .trilha, .cartao, .visite figure, .marcos li, .povos > *, [data-conta]").forEach(el => {
+    if (el.getBoundingClientRect().top > altura * .9){
+      el.classList.add("revela");
+      if (!el.dataset.conta) el.classList.add("pre");
+      observador.observe(el);
+    }
+  });
+}
+
+/* ---------- Rolagem: cabeçalho, progresso, paralaxe, menu ativo ---------- */
+const topo = document.getElementById("topo");
+const progresso = document.getElementById("progresso");
+const paralaxe = document.querySelector("[data-paralaxe]");
+const secoes = [...document.querySelectorAll("main section[id]")];
+const linksMenu = [...document.querySelectorAll(".menu a")];
+let agendado = false;
+function aoRolar(){
+  agendado = false;
+  const y = scrollY, total = document.documentElement.scrollHeight - innerHeight;
+  topo.classList.toggle("solido", y > 60);
+  progresso.style.transform = `scaleX(${total > 0 ? y / total : 0})`;
+  if (!semMovimento && paralaxe){
+    const r = paralaxe.parentElement.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight){
+      const k = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+      paralaxe.style.transform = `translateY(${k * -12}%)`;
+    }
+  }
+  let atual = "";
+  secoes.forEach(s => { if (s.getBoundingClientRect().top < innerHeight * .35) atual = s.id; });
+  linksMenu.forEach(a => a.classList.toggle("ativo", a.getAttribute("href") === "#" + atual));
+}
+addEventListener("scroll", () => { if (!agendado){ agendado = true; requestAnimationFrame(aoRolar); } }, {passive:true});
+aoRolar();
+
+/* ---------- Visor de fotos ---------- */
+const visor = document.getElementById("visor");
+const visorImg = document.getElementById("visor-img");
+const visorLegenda = document.getElementById("visor-legenda");
+let lista = [], pos = 0;
+function mostrar(i){
+  pos = (i + lista.length) % lista.length;
+  const f = porId[lista[pos]];
+  visorImg.src = `img/${f.id}.jpg`;
+  visorImg.alt = f.alt;
+  visorLegenda.innerHTML = `<b>${f.titulo}</b>${f.texto}${lista.length > 1 ? ` · ${pos + 1} de ${lista.length}` : ""}`;
+  document.getElementById("ant").hidden = document.getElementById("prox").hidden = lista.length < 2;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-abrir]");
+  if (!b) return;
+  const g = b.closest("[data-galeria]");
+  lista = g ? g.dataset.ids.split(",") : [b.dataset.abrir];
+  mostrar(lista.indexOf(b.dataset.abrir));
+  if (typeof visor.showModal === "function") visor.showModal(); else visor.setAttribute("open", "");
+});
+document.getElementById("ant").onclick = () => mostrar(pos - 1);
+document.getElementById("prox").onclick = () => mostrar(pos + 1);
+document.getElementById("fechar").onclick = () => visor.close();
+visor.addEventListener("click", e => { if (e.target === visor) visor.close(); });
+addEventListener("keydown", e => {
+  if (!visor.open) return;
+  if (e.key === "ArrowLeft") mostrar(pos - 1);
+  if (e.key === "ArrowRight") mostrar(pos + 1);
+});
+let toqueX = null;
+visorImg.addEventListener("touchstart", e => { toqueX = e.touches[0].clientX; }, {passive:true});
+visorImg.addEventListener("touchend", e => {
+  if (toqueX === null) return;
+  const dx = e.changedTouches[0].clientX - toqueX;
+  if (Math.abs(dx) > 40) mostrar(pos + (dx < 0 ? 1 : -1));
+  toqueX = null;
+});
+
+/* ---------- Menu no celular ---------- */
+const btnMenu = document.getElementById("btn-menu");
+const menu = document.getElementById("menu");
+btnMenu.addEventListener("click", () => {
+  const aberto = menu.classList.toggle("aberto");
+  btnMenu.setAttribute("aria-expanded", String(aberto));
+});
+menu.addEventListener("click", e => {
+  if (e.target.tagName === "A"){ menu.classList.remove("aberto"); btnMenu.setAttribute("aria-expanded", "false"); }
+});
+</script>
+</body>
+</html>
